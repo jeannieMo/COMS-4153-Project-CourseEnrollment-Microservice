@@ -1,5 +1,6 @@
 from canvasapi import Canvas
 from fastapi import HTTPException
+from app.resources.course_resource import CourseResource
 import os
 
 """
@@ -7,8 +8,8 @@ import os
     courseworks token, we'll have to figure out a way to get each user's token when they use this app....
 """
 class CourseWorksAPI:
-    def __init__(self):
-        self.token = "1396~yFrVF9nYzKV6YyrAtaZccFcLATt84zMcLJehYX7Y26z7RGuCnuAmGQQmCJtN8H6C"
+    def __init__(self, token):
+        self.token = token
         self.base_url = "https://courseworks2.columbia.edu"
         self.canvas = Canvas(self.base_url, self.token)
 
@@ -17,17 +18,34 @@ class CourseWorksAPI:
         Get the list of courses for a specific student.
         """
         try:
-            print('hi',student_id)
             user = self.canvas.get_user(student_id, "sis_user_id")
             courses = user.get_courses()
             courses_list = []
             # Iterate over the PaginatedList and add each course to the list
             for course in courses:
-                print(course.enrollments)
-                courses_list.append(course.name)
+                if "2024_3" in course.course_code:
+                    courses_list.append(course.course_code)
             return courses_list
         except Exception as e:
             raise HTTPException(status_code=404, detail=f"Error fetching courses for student {student_id}: {str(e)}")
+    """
+        try:
+            student = CourseResource.get_courses(student_id)
+            if not student:
+                user = self.canvas.get_user(student_id, "sis_user_id")
+                courses = user.get_courses()
+                courses_list = []
+                # Iterate over the PaginatedList and add current courses to the list
+                for course in courses:
+                    if "2024_3" in course.course_code:
+                        courses_list.append(course.course_code)
+                CourseResource.create_or_update_student(courses_list)
+            else:
+                courses = CourseResource.get_courses(student_id)
+            return {"student_id": student_id, "student": student, "courses": courses}
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+    """
 
     def get_course_students_by_code(self, course_code: str):
         """
@@ -36,9 +54,8 @@ class CourseWorksAPI:
         try:
             courses = self.canvas.get_courses()
             for course in courses:
-                filtered_course_code = str(course.course_code.split('_')[0])
+                filtered_course_code = str(course.course_code.split(" ")[0])
                 if filtered_course_code == str(course_code):
-                    print(course.name)
                     enrollments = course.get_enrollments()
                     students = []
                     for enrollment in enrollments:
@@ -53,3 +70,31 @@ class CourseWorksAPI:
                 raise HTTPException(status_code=404, detail=f"No course found with course_code {course_code}")
         except Exception as e:
             raise HTTPException(status_code=404, detail=f"Error fetching students for course {course_code}: {str(e)}")
+        """
+        try:
+            course = CourseResource.get_students(course_code)
+            if not course:
+                # course not in database, so add it
+                courses = self.canvas.get_courses()
+                for course in courses:
+                    filtered_course_code = str(course.course_code.split('_')[0])
+                    if filtered_course_code == str(course_code):
+                        enrollments = course.get_enrollments()
+                        students = []
+                        for enrollment in enrollments:
+                            if enrollment.type == "StudentEnrollment":
+                                # Add the student information to the students list
+                                students.append({
+                                    "name": enrollment.user['name'],
+                                    "id:": enrollment.user.get('id', 'N/A')
+                                })
+                        CourseResource.create_or_update_course(students)
+        
+
+
+
+            if not courses:
+                raise HTTPException(status_code=404, detail=f"No course found with course_code {course_code}")
+        except Exception as e:
+            raise HTTPException(status_code=404, detail=f"Error fetching students for course {course_code}: {str(e)}")
+        """

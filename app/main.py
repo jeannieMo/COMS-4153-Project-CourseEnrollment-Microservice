@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import students, courses
+from routers import students, courses
 
 """
     Entrypoint to the Course Enrollment interface! 
@@ -9,8 +9,8 @@ from app.routers import students, courses
     See the list of classmates in COMSW4153 and their IDs:
         http://127.0.0.1:8000/course/COMSW4153/students`
     
-    See the list of courses Jeannie is in (has been in since Freshman year, i'll figrue out how to do it by term later):
-        http://127.0.0.1:8000/users/jam2492/courses
+    See the list of students a course has this semester:
+        curl -X GET "http://localhost:8000/course/<course id until the first '_'>/students" -H "token: 1396~yFrVF9nYzKV6YyrAtaZccFcLATt84zMcLJehYX7Y26z7RGuCnuAmGQQmCJtN8H6C"
         
     The output is JSON.
 """
