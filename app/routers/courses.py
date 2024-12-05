@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Header
-from app.services.courseworks_api import CourseWorksAPI
+from services.courseworks_api import CourseWorksAPI
 """
     Router in charge of connecting with `courseworks_api.py` to get the students enrolled in a class
 """

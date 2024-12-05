@@ -1,7 +1,7 @@
 from canvasapi import Canvas
 from fastapi import HTTPException
-from app.resources.course_resource import CourseResource
-import os
+# from app.resources.course_resource import CourseResource
+# import os
 
 """
     File in charge of connecting with the courseworks api to get desired results. Currently Hardcoded with Jeannie's 
