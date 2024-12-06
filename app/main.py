@@ -20,9 +20,11 @@ app = FastAPI()
 # Enable CORS for development purposes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins for simplicity during development
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],  # Your React app's URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+    expose_headers=["*"]
 )
 
 # Include the routes from the students and courses routers
@@ -35,4 +37,4 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
