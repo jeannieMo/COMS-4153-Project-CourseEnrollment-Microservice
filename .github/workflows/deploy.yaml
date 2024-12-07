@@ -24,6 +24,4 @@ jobs:
           ls
           cd /home/ec2-user/COMS-4153-Project-CourseEnrollment-Microservice
           git pull origin main
-          npm install
-          pm2 restart all
 
