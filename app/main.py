@@ -3,11 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import students, courses
 
 """
-
-    The wizards was here.
-
-
-    
     Entrypoint to the Course Enrollment interface! 
     For examples on what you can do with this, try running this `main.py` then go to your browser and do:
     
