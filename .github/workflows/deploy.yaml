@@ -25,5 +25,5 @@ jobs:
           cd /home/ec2-user/COMS-4153-Project-CourseEnrollment-Microservice
           git pull origin main
           pip install -r requirements.txt
-          sudo systemctl restart COMS-4153-Project-CourseEnrollment-Microservice
+          sudo systemctl restart course-enrollment.service
 
