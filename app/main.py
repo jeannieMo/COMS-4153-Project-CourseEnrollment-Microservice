@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import students, courses
 
 """
+    Group Project for Cloud Computing Course!
+    
     Entrypoint to the Course Enrollment interface! 
     For examples on what you can do with this, try running this `main.py` then go to your browser and do:
     
