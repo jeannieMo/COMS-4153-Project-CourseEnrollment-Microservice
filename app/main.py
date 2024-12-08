@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import students, courses
+from app.routers import students, courses
 
 """
     Group Project for Cloud Computing Course!
