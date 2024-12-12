@@ -1,21 +1,21 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import students, courses
+import logging
+from logging.handlers import RotatingFileHandler
 
 """
     Group Project for Cloud Computing Course!!
     
-    Entrypoint to the Course Enrollment interface! 
-    For examples on what you can do with this, try running this `main.py` then go to your browser and do:
-    
-    See the list of classmates in COMSW4153 and their IDs:
-        http://127.0.0.1:8000/course/COMSW4153/students`
-    
-    See the list of students a course has this semester:
-        curl -X GET "http://localhost:8000/course/<course id until the first '_'>/students" -H "token: 1396~yFrVF9nYzKV6YyrAtaZccFcLATt84zMcLJehYX7Y26z7RGuCnuAmGQQmCJtN8H6C"
-        
-    The output is JSON.
 """
+
+logging.basicConfig(
+    handlers=[RotatingFileHandler('/var/log/course-enrollment.log', maxBytes=100000, backupCount=5)],
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+)
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -36,6 +36,12 @@ app.include_router(courses.router)
 @app.get("/")
 async def root():
     return {"message": "Course Enrollment Microservice is Running!"}
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info(f"Request path: {request.url.path} - Correlation-ID: {request.headers.get('X-Correlation-ID', 'Not provided')}")
+    response = await call_next(request)
+    return response
 
 if __name__ == "__main__":
     import uvicorn
