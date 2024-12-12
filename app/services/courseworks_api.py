@@ -28,24 +28,6 @@ class CourseWorksAPI:
             return courses_list
         except Exception as e:
             raise HTTPException(status_code=404, detail=f"Error fetching courses for student {student_id}: {str(e)}")
-    """
-        try:
-            student = CourseResource.get_courses(student_id)
-            if not student:
-                user = self.canvas.get_user(student_id, "sis_user_id")
-                courses = user.get_courses()
-                courses_list = []
-                # Iterate over the PaginatedList and add current courses to the list
-                for course in courses:
-                    if "2024_3" in course.course_code:
-                        courses_list.append(course.course_code)
-                CourseResource.create_or_update_student(courses_list)
-            else:
-                courses = CourseResource.get_courses(student_id)
-            return {"student_id": student_id, "student": student, "courses": courses}
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
-    """
 
     def get_course_students_by_code(self, course_code: str):
         """
@@ -63,38 +45,10 @@ class CourseWorksAPI:
                             # Add the student information to the students list
                             students.append({
                                 "name": enrollment.user['name'],
-                                "id:": enrollment.user.get('id', 'N/A')
+                                "id": enrollment.user.get('id', 'N/A')
                             })
                     return students
             if not courses:
                 raise HTTPException(status_code=404, detail=f"No course found with course_code {course_code}")
         except Exception as e:
             raise HTTPException(status_code=404, detail=f"Error fetching students for course {course_code}: {str(e)}")
-        """
-        try:
-            course = CourseResource.get_students(course_code)
-            if not course:
-                # course not in database, so add it
-                courses = self.canvas.get_courses()
-                for course in courses:
-                    filtered_course_code = str(course.course_code.split('_')[0])
-                    if filtered_course_code == str(course_code):
-                        enrollments = course.get_enrollments()
-                        students = []
-                        for enrollment in enrollments:
-                            if enrollment.type == "StudentEnrollment":
-                                # Add the student information to the students list
-                                students.append({
-                                    "name": enrollment.user['name'],
-                                    "id:": enrollment.user.get('id', 'N/A')
-                                })
-                        CourseResource.create_or_update_course(students)
-        
-
-
-
-            if not courses:
-                raise HTTPException(status_code=404, detail=f"No course found with course_code {course_code}")
-        except Exception as e:
-            raise HTTPException(status_code=404, detail=f"Error fetching students for course {course_code}: {str(e)}")
-        """
