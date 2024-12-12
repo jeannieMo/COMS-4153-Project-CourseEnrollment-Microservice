@@ -14,4 +14,12 @@ async def get_course_students(course_code: str, token: str = Header(...)):
     print(f"Correlation ID: {correlation_id} - Fetching students for course: {course_code}")
     api = CourseWorksAPI(token)
     students = api.get_course_students_by_code(course_code)
-    return {"course_code": course_code, "students": students}
+    return {"course_code": course_code, 
+            "students": students, 
+            "links":{
+                "self": {
+                    "href": f"/course/{course_code}/students"
+                }
+            }
+           }
+    
