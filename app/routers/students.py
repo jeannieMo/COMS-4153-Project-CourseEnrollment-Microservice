@@ -11,7 +11,7 @@ router = APIRouter()
 @router.get("/users/{student_id}/courses", tags=["students"])
 async def get_student_courses(request: Request, student_id: str, token: str = Header(...)):
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
-    print(f"Correlation ID: {correlation_id} - Fetching students for course: {course_code}")
+    print(f"Correlation ID: {correlation_id} - Fetching courses for student: {student_id}")
     api = CourseWorksAPI(token)
     try:
         courses = api.get_student_courses(student_id)
