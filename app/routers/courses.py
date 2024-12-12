@@ -9,7 +9,7 @@ router = APIRouter()
 
 # Fetch students enrolled in a course by course code (e.g., COMSW4153)
 @router.get("/course/{course_code}/students", tags=["courses"])
-async def get_course_students(request: Request,course_code: str, token: str = Header(...)):
+async def get_course_students(request: Request, response: Response, course_code: str, token: str = Header(...)):
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
     response.headers["X-Correlation-ID"] = correlation_id
     print(f"Correlation ID: {correlation_id} - Fetching students for course: {course_code}")
