@@ -4,14 +4,14 @@ Course Enrollment microservice application part of COMS-4153-Project for W4153 C
 
 **Functionality (FastAPI)**
 -  Get courses for student: 
-   curl -X 'GET' \ 'http://35.174.4.121:8000/users/<uni>/courses' \
+   `curl -X 'GET' \ 'http://35.174.4.121:8000/users/<uni>/courses' \
    -H 'accept: application/json' \
-   -H 'token: <*courseworks token without quotes>’
+   -H 'token: <*courseworks token without quotes>’`
 - Get students in course: 
-  curl -X ‘GET'\'http://35.174.4.121:8000/course/<*coursecode>
+  `curl -X ‘GET'\'http://35.174.4.121:8000/course/<*coursecode>
   /students' \ 
   -H 'accept: application/json' \ 
-  -H 'token: <*courseworks token without quotes>'
+  -H 'token: <*courseworks token without quotes>'`
 
    *courseworks token = token generated from courseworks that allows       
      us to access student’s profile
