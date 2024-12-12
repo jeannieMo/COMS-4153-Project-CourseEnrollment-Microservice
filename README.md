@@ -1,6 +1,7 @@
 # COMS-4153-Project-CourseEnrollment-Microservice
 
 Course Enrollment microservice application part of COMS-4153-Project for W4153 Cloud Computing.
+
 **Functionality (FastAPI)**
 -  Get courses for student: 
    curl -X 'GET' \ 'http://35.174.4.121:8000/users/<uni>/courses' \
