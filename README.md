@@ -15,6 +15,7 @@ Course Enrollment microservice application part of COMS-4153-Project for W4153 C
 
    *courseworks token = token generated from courseworks that allows       
      us to access student’s profile
+   *coursecode = code of the form: "COMSW4153_001_2024_3"
 
 **Functionality**
 - Communicates with Courseworks via API
