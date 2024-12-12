@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Header, Request
+from fastapi import APIRouter, HTTPException, Header, Request, Response
 from services.courseworks_api import CourseWorksAPI
 import uuid
 """
@@ -11,6 +11,7 @@ router = APIRouter()
 @router.get("/course/{course_code}/students", tags=["courses"])
 async def get_course_students(request: Request,course_code: str, token: str = Header(...)):
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
+    response.headers["X-Correlation-ID"] = correlation_id
     print(f"Correlation ID: {correlation_id} - Fetching students for course: {course_code}")
     api = CourseWorksAPI(token)
     students = api.get_course_students_by_code(course_code)
